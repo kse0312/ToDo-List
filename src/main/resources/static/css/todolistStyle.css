@@ -1,3 +1,8 @@
+
+body{
+    background-color: #f7f7f7;
+}
+
 /* Main container */
 .container {
     max-width: 1130px;
@@ -67,14 +72,20 @@ h1 {
 
 #myUL li {
     position: relative;
-    padding: 12px 8px 12px 40px;
+    padding: 20px 8px 20px 40px;
     margin-bottom: 10px;
     cursor: pointer;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+#myUL li:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
 #myUL li .task {
     display: inline-block;
-    width: 80%;
+    width: 90%;
     text-align: left;
     font-size: 18px;
 }
@@ -84,14 +95,62 @@ h1 {
     color: #aaa;
 }
 
+#myUL li .edit {
+    color: #4CAF50;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+#myUL li .edit:hover {
+    text-decoration: underline;
+}
+
+
 #myUL li .delete {
     position: absolute;
     top: 0;
     right: 0;
     color: #f44336;
     font-size: 24px;
+    padding-right: 30px;
 }
 
 #myUL li .delete:hover {
     color: #ff0d0d;
+}
+
+#myUL li.editing .task {
+    display: none;
+}
+
+#myUL li .edit-form {
+    display: none;
+}
+
+#myUL li.editing .edit-form {
+    display: block;
+    margin-top: 5px;
+}
+
+#myUL li.editing .edit-input {
+    width: 80%;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px #4CAF50;
+    outline: none;
+}
+
+#myUL li.editing .edit-form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+#myUL li.editing .edit-form .button:hover {
+    background-color: #3e8e41;
 }

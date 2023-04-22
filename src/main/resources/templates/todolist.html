@@ -33,25 +33,85 @@
     </div>
     <ul id="myUL">
         <li th:each="todoentity : ${toDoEntityList}" th:class="${todoentity.completed} ? 'checked' : ''">
-            <span th:text="${todoentity.id} + ' : ' + ${todoentity.contents}" class="task"></span>
-            <span class="delete" onclick="deleteElement(this)">×</span>
+            <span class="task" th:id="${todoentity.id}" th:text="${todoentity.contents}"></span>
+            <span class="edit" onclick="startEditing(this)">수정</span>
+            <span class="edit-form">
+                <input class="edit-input" type="text" th:id="'edit-input-' + ${todoentity.id}" th:value="${todoentity.contents}">
+                <button class="button" type="button" th:onclick="reviseElement([[${todoentity.id}]])">저장</button>
+                <button class="button" type="button" onclick="cancelEditing(this)">취소</button>
+            </span>
+            <span class="delete" th:onclick="deleteElement([[${todoentity.id}]])">×</span>
         </li>
     </ul>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     // Add a "checked" symbol when clicking on a list item
-    var list = document.querySelector('ul');
-    list.addEventListener('click', function(ev) {
-        if (ev.target.tagName === 'LI') {
-            ev.target.classList.toggle('checked');
-        }
-    }, false);
-
+    var tasks = document.querySelectorAll('.task');
+    tasks.forEach(function(task) {
+        task.addEventListener('click', function(ev) {
+            console.log(ev.target.id)
+            if (ev.target.tagName === 'SPAN') {
+                ev.target.parentElement.classList.toggle('checked');
+                console.log(ev.target.parentElement.classList.contains('checked'));
+            }
+        });
+    });
     // Delete a list item when clicking on the "×" button
-    function deleteElement(span) {
-        var li = span.parentElement;
-        li.style.display = 'none';
+    function deleteElement(id) {
+        const url = "/todo/delete/"+id
+        $.ajax({
+            type:'delete',
+            url:url,
+            contentType:'application/json; charset=utf-8'
+        }).done(function() {
+            alert('할 일이 삭제되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error){
+            alert(JSON.stringify(error));
+        });
+    }
+    function reviseElement(id){
+        const input = document.getElementById(`edit-input-${id}`);
+        const contents = input.value;
+        console.log(id)
+        console.log(contents);
+        const url = "/todo/update/"+id;
+        $.ajax({
+            type:'put',
+            url:url,
+            contentType:'application/json; charset=utf-8',
+            data: contents,
+        }).done(function() {
+            alert('할 일이 수정되었습니다.');
+            window.location.href = '/';
+        }).fail(function (error){
+            alert(JSON.stringify(error));
+        });
+        //cancelEditing(this)
+    }
+    function startEditing(editButton) {
+        // get the parent li element
+        const listItem = editButton.parentNode;
+
+        // add 'editing' class to li element
+        listItem.classList.add('editing');
+
+        // hide '수정' and '삭제' buttons
+        editButton.style.display = 'none';
+        listItem.querySelector('.delete').style.display = 'none';
+    }
+
+    function cancelEditing(cancelButton) {
+        // get the parent li element
+        const listItem = cancelButton.parentNode.parentNode;
+
+        // remove 'editing' class from li element
+        listItem.classList.remove('editing');
+
+        // show '수정' and '삭제' buttons
+        listItem.querySelector('.edit').style.display = 'inline';
+        listItem.querySelector('.delete').style.display = 'inline';
     }
 </script>
 </body>

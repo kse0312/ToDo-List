@@ -6,9 +6,7 @@ import com.example.todo.ToDoList.Service.ToDoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,6 +31,19 @@ public class ToDoController {
         //Todo : 아이템 삽입
         this.toDoService.createList(contents);
         // 다시 원래 화면으로 리다이렉트
+        return "redirect:/todo";
+    }
+    @DeleteMapping("/todo/delete/{id}")
+    public String todoDelete(@PathVariable Integer id){
+        //Todo : 아이템 삭제
+        this.toDoService.deleteList(id);
+        return "redirect:/todo";
+    }
+
+    @PutMapping("/todo/update/{id}")
+    public String todoUpdate(@RequestBody String content, @PathVariable Integer id){
+        //ajax에서 put을 사용하려면 @RequestBody 어노테이션을 사용해야한다
+        this.toDoService.updateList(id, content);
         return "redirect:/todo";
     }
     @RequestMapping("/")
