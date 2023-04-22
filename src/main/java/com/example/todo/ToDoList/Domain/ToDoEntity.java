@@ -23,7 +23,7 @@ public class ToDoEntity {
     @Column(length=200)
     // Column의 세부 설정을 위해 사용
     // varchar의 길이를 조정합니다. 기본값으로 255가 입력
-    private String content;
+    private String contents;
 
     @Column(nullable = false)
     private Boolean completed;

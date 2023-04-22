@@ -26,6 +26,10 @@ dependencies {
 	//H2 데이터베이스
 	runtimeOnly 'com.h2database:h2'
 
+	//thymeleaf 사용 : 템플릿 연결
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

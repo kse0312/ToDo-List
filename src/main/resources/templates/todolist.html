@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Todo List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/todolistStyle.css}">
+</head>
+<body>
+<h1>Todo List</h1>
+<div class="form">
+    <!--
+        th:action 속성은 HTML <form> 요소에서 사용되며, 제출된 데이터를 처리하는 URL을 지정합니다.
+
+        @{/todo}는 Thymeleaf의 URL 표현식으로, 컨텍스트 상대 URL을 생성합니다.
+        @{/todo}는 현재 애플리케이션의 루트 경로(/)를 기준으로 todo라는 이름을 가진 컨트롤러의 경로를 생성합니다.
+        예를 들어, 애플리케이션의 루트 경로가 http://localhost:8080/myapp/이고 todo 컨트롤러가 /list 경로에 매핑되어 있다면,
+        @{/todo}는 http://localhost:8080/myapp/list를 생성합니다.
+
+        따라서 <form th:action="@{/todo}" method="post">은 폼을 제출할 때,
+        POST 방식으로 http://localhost:8080/todo 경로를 요청합니다.
+        이는 /todo 경로를 처리하는 컨트롤러가 존재한다는 가정하에 작성된 코드입니다.
+    -->
+    <form method="post" th:action="@{/todo}">
+        <input type="text" name="contents" class="input" placeholder="Add a task...">
+        <button type="submit" class="button">Create</button>
+    </form>
+</div>
+<ul id="myUL">
+    <li th:each="todoentity : ${toDoEntityList}" th:class="${todoentity.completed} ? 'checked' : ''">
+        <span th:text="${todoentity.id} + ':' + ${todoentity.contents}" class="task"></span>
+        <span class="delete" onclick="deleteElement(this)">×</span>
+    </li>
+</ul>
+<script>
+    // Add a "checked" symbol when clicking on a list item
+    var list = document.querySelector('ul');
+    list.addEventListener('click', function(ev) {
+        if (ev.target.tagName === 'LI') {
+            ev.target.classList.toggle('checked');
+        }
+    }, false);
+
+    // Delete a list item when clicking on the "×" button
+    function deleteElement(span) {
+        var li = span.parentElement;
+        li.style.display = 'none';
+    }
+</script>
+</body>
+</html>

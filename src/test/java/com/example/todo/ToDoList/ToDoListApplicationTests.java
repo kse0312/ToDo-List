@@ -10,20 +10,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ToDoListApplicationTests {
 
 	@Autowired
-
+	//@Autowired : 속성에 객체를 주입하는 방식
 	private ToDoRepository toDoRepository;
 
 	@Test
 	void TestJpa(){
 		ToDoEntity todo1 = new ToDoEntity();
 
-		todo1.setContent("밥먹기");
+		todo1.setContents("밥먹기");
 		todo1.setCompleted(Boolean.TRUE);
 		this.toDoRepository.save(todo1);
 
 		ToDoEntity todo2 = new ToDoEntity();
 
-		todo2.setContent("공부하기");
+		todo2.setContents("공부하기");
 		todo2.setCompleted(Boolean.TRUE);
 		this.toDoRepository.save(todo2);
 
