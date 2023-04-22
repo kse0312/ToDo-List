@@ -1,73 +1,97 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f2f2f2;
+/* Main container */
+.container {
+    max-width: 1130px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
+/* Title */
 h1 {
     text-align: center;
-    margin-top: 20px;
-    color: #333;
 }
 
-ul {
+/* Form */
+.form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.postform{
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+.form input[type="text"] {
+    flex-grow: 1;
+    width: 50%;
+    padding: 12px 20px;
+    margin-right: 10px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    font-size: 16px;
+    outline: none;
+}
+
+.form input[type="text"]:focus {
+    border-bottom: 2px solid #5e72e4;
+}
+
+.form button[type="submit"] {
+    flex-grow: 0;
+    background-color: #5e72e4;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Count */
+.count {
+    margin-bottom: 20px;
+}
+
+.count p {
+    text-align: right;
+    font-size: 14px;
+}
+
+.count span {
+    font-weight: bold;
+}
+
+/* List */
+#myUL {
     list-style-type: none;
     padding: 0;
 }
 
-li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
+#myUL li {
     position: relative;
-}
-
-li:last-child {
-    border-bottom: none;
-}
-
-.checked {
-    text-decoration: line-through;
-}
-
-.delete {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
-
-.delete:hover {
-    color: red;
-}
-
-.form {
-    display: flex;
-    margin-top: 10px;
+    padding: 12px 8px 12px 40px;
     margin-bottom: 10px;
-}
-
-.input {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 0;
-    background-color: #fff;
-    color: #333;
-}
-
-.button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 0;
-    background-color: #4CAF50;
-    color: #fff;
     cursor: pointer;
 }
 
-.button:hover {
-    background-color: #3e8e41;
+#myUL li .task {
+    display: inline-block;
+    width: 80%;
+    text-align: left;
+    font-size: 18px;
+}
+
+#myUL li.checked .task {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+#myUL li .delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #f44336;
+    font-size: 24px;
+}
+
+#myUL li .delete:hover {
+    color: #ff0d0d;
 }

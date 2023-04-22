@@ -18,4 +18,11 @@ public class ToDoService {
     public List<ToDoEntity> getList(){
         return this.toDoRepository.findAll();
     }
+
+    public void createList(String contents){
+        ToDoEntity toDoEntity = new ToDoEntity();
+        toDoEntity.setContents(contents);
+        toDoEntity.setCompleted(false);
+        this.toDoRepository.save(toDoEntity);
+    }
 }

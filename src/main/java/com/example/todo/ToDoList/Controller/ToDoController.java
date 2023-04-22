@@ -6,7 +6,9 @@ import com.example.todo.ToDoList.Service.ToDoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,7 +28,13 @@ public class ToDoController {
         //내가 출력할 템플릿 이름
         return "todolist";
     }
-
+    @PostMapping("/todo/create")
+    public String todoCreate(@RequestParam String contents){
+        //Todo : 아이템 삽입
+        this.toDoService.createList(contents);
+        // 다시 원래 화면으로 리다이렉트
+        return "redirect:/todo";
+    }
     @RequestMapping("/")
     public String root(){
         return "redirect:/todo";
