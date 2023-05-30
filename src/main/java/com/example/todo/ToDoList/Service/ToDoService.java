@@ -1,7 +1,7 @@
 package com.example.todo.ToDoList.Service;
 
 
-import com.example.todo.ToDoList.Domain.ToDoEntity;
+import com.example.todo.ToDoList.Domain.ToDo;
 import com.example.todo.ToDoList.Repository.ToDoRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +16,15 @@ import java.util.List;
 public class ToDoService {
     private final ToDoRepository toDoRepository;
 
-    public List<ToDoEntity> getList(){
-        return this.toDoRepository.findAll();
+    public List<ToDo> getList(){
+        return toDoRepository.findAll();
     }
 
     public void createList(String contents){
-        ToDoEntity toDoEntity = new ToDoEntity();
+        ToDo toDoEntity = new ToDo();
         toDoEntity.setContents(contents);
         toDoEntity.setCompleted(false);
-        this.toDoRepository.save(toDoEntity);
+        toDoRepository.save(toDoEntity);
     }
     @Transactional
     /*
@@ -33,18 +33,17 @@ public class ToDoService {
         선언적 트랜잭션이라고도 하는데, 직접 객체를 만들 필요 없이 선언만으로도 관리를 용이하게 해주기 때문.
         특히나 SpringBoot에서는 선언적 트랜잭션에 필요한 여러 설정이 이미 되어있는 탓에, 더 쉽게 사용할 수 있다.
      */
-    public void deleteList(Integer id) {
-        ToDoEntity toDoEntity = toDoRepository.findById(id)
+    public void deleteList(Long id) {
+        ToDo toDo = toDoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 아이템이 없습니다. id=" + id));
-
-        this.toDoRepository.delete(toDoEntity);
+        toDoRepository.delete(toDo);
     }
     @Transactional
-    public void updateList(Integer id, String content) {
-        ToDoEntity toDoEntity = toDoRepository.findById(id)
+    public void updateList(Long id, String content) {
+        ToDo toDo = toDoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 아이템이 없습니다. id=" + id));
 
-        toDoEntity.setContents(content);
-        this.toDoRepository.save(toDoEntity);
+        toDo.setContents(content);
+        toDoRepository.save(toDo);
     }
 }

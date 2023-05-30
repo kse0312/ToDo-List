@@ -1,7 +1,6 @@
 package com.example.todo.ToDoList.Controller;
 
-import com.example.todo.ToDoList.Domain.ToDoEntity;
-import com.example.todo.ToDoList.Repository.ToDoRepository;
+import com.example.todo.ToDoList.Domain.ToDo;
 import com.example.todo.ToDoList.Service.ToDoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,30 +19,27 @@ public class ToDoController {
     private final ToDoService toDoService;
     @RequestMapping("/todo")
     public String todolist(Model model){
-        List<ToDoEntity> toDoEntityList = this.toDoService.getList();
+        List<ToDo> toDoList = this.toDoService.getList();
         // "toDoEntityList"라는 이름으로 데이터를 Model 객체에 저장
-        model.addAttribute("toDoEntityList",toDoEntityList);
+        model.addAttribute("toDoList",toDoList);
         //내가 출력할 템플릿 이름
         return "todolist";
     }
     @PostMapping("/todo/create")
     public String todoCreate(@RequestParam String contents){
-        //Todo : 아이템 삽입
-        this.toDoService.createList(contents);
+        toDoService.createList(contents);
         // 다시 원래 화면으로 리다이렉트
         return "redirect:/todo";
     }
     @DeleteMapping("/todo/delete/{id}")
-    public String todoDelete(@PathVariable Integer id){
-        //Todo : 아이템 삭제
-        this.toDoService.deleteList(id);
+    public String todoDelete(@PathVariable Long id){
+        toDoService.deleteList(id);
         return "redirect:/todo";
     }
 
     @PutMapping("/todo/update/{id}")
-    public String todoUpdate(@RequestBody String content, @PathVariable Integer id){
-        //ajax에서 put을 사용하려면 @RequestBody 어노테이션을 사용해야한다
-        this.toDoService.updateList(id, content);
+    public String todoUpdate(@RequestBody String content, @PathVariable Long id){
+        toDoService.updateList(id, content);
         return "redirect:/todo";
     }
     @RequestMapping("/")

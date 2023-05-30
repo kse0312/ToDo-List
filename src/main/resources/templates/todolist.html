@@ -29,18 +29,18 @@
     </div>
 
     <div class="count">
-        <p>Total Posts: <span th:text="${#lists.size(toDoEntityList)}"></span></p>
+        <p>Total Posts: <span th:text="${#lists.size(toDoList)}"></span></p>
     </div>
     <ul id="myUL">
-        <li th:each="todoentity : ${toDoEntityList}" th:class="${todoentity.completed} ? 'checked' : ''">
-            <span class="task" th:id="${todoentity.id}" th:text="${todoentity.contents}"></span>
+        <li th:each="todo : ${toDoList}" th:class="${todo.completed} ? 'checked' : ''">
+            <span class="task" th:id="${todo.id}" th:text="${todo.contents}"></span>
             <span class="edit" onclick="startEditing(this)">수정</span>
             <span class="edit-form">
-                <input class="edit-input" type="text" th:id="'edit-input-' + ${todoentity.id}" th:value="${todoentity.contents}">
-                <button class="button" type="button" th:onclick="reviseElement([[${todoentity.id}]])">저장</button>
+                <input class="edit-input" type="text" th:id="'edit-input-' + ${todo.id}" th:value="${todo.contents}">
+                <button class="button" type="button" th:onclick="reviseElement([[${todo.id}]])">저장</button>
                 <button class="button" type="button" onclick="cancelEditing(this)">취소</button>
             </span>
-            <span class="delete" th:onclick="deleteElement([[${todoentity.id}]])">×</span>
+            <span class="delete" th:onclick="deleteElement([[${todo.id}]])">×</span>
         </li>
     </ul>
 </div>

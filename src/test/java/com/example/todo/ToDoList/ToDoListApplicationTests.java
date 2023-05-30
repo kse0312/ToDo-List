@@ -1,6 +1,6 @@
 package com.example.todo.ToDoList;
 
-import com.example.todo.ToDoList.Domain.ToDoEntity;
+import com.example.todo.ToDoList.Domain.ToDo;
 import com.example.todo.ToDoList.Repository.ToDoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,13 @@ class ToDoListApplicationTests {
 
 	@Test
 	void TestJpa(){
-		ToDoEntity todo1 = new ToDoEntity();
+		ToDo todo1 = new ToDo();
 
 		todo1.setContents("밥먹기");
 		todo1.setCompleted(Boolean.TRUE);
 		this.toDoRepository.save(todo1);
 
-		ToDoEntity todo2 = new ToDoEntity();
+		ToDo todo2 = new ToDo();
 
 		todo2.setContents("공부하기");
 		todo2.setCompleted(Boolean.TRUE);
