@@ -97,8 +97,10 @@ h1 {
 
 #myUL li .edit {
     color: #4CAF50;
+    margin-top: 10px;
     margin-left: 10px;
     cursor: pointer;
+
 }
 
 #myUL li .edit:hover {

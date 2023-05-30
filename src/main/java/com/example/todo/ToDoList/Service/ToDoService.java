@@ -39,11 +39,19 @@ public class ToDoService {
         toDoRepository.delete(toDo);
     }
     @Transactional
-    public void updateList(Long id, String content) {
+    public void updateToDo(Long id, String content) {
         ToDo toDo = toDoRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 아이템이 없습니다. id=" + id));
 
         toDo.setContents(content);
+        toDoRepository.save(toDo);
+    }
+    @Transactional
+    public void updateToDo(Long id, boolean completed) {
+        ToDo toDo = toDoRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("해당 아이템이 없습니다. id=" + id));
+
+        toDo.setCompleted(completed);
         toDoRepository.save(toDo);
     }
 }

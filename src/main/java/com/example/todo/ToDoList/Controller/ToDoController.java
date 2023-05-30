@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,23 +26,27 @@ public class ToDoController {
         //내가 출력할 템플릿 이름
         return "todolist";
     }
-    @PostMapping("/todo/create")
+    @PostMapping("/todo")
     public String todoCreate(@RequestParam String contents){
         toDoService.createList(contents);
         // 다시 원래 화면으로 리다이렉트
         return "redirect:/todo";
     }
-    @DeleteMapping("/todo/delete/{id}")
+    @DeleteMapping("/todo/{id}")
     public String todoDelete(@PathVariable Long id){
         toDoService.deleteList(id);
         return "redirect:/todo";
     }
 
-    @PutMapping("/todo/update/{id}")
-    public String todoUpdate(@RequestBody String content, @PathVariable Long id){
-        toDoService.updateList(id, content);
+    @PutMapping("/todo/{id}")
+    public String todoUpdateContent(@RequestBody HashMap<String, Object> requestMap, @PathVariable Long id){
+        System.out.println(requestMap.get("content"));
+        System.out.println(requestMap.get("completed"));
+        if(requestMap.get("completed") == null) toDoService.updateToDo(id, requestMap.get("content").toString());
+        else toDoService.updateToDo(id, (Boolean) requestMap.get("completed"));
         return "redirect:/todo";
     }
+
     @RequestMapping("/")
     public String root(){
         return "redirect:/todo";

@@ -22,7 +22,7 @@
             POST 방식으로 http://localhost:8080/todo 경로를 요청합니다.
             이는 /todo 경로를 처리하는 컨트롤러가 존재한다는 가정하에 작성된 코드입니다.
         -->
-        <form class="postform" th:action="@{/todo/create}" method="post">
+        <form class="postform" th:action="@{/todo}" method="post">
             <input type="text" name="contents" class="input" placeholder="오늘의 할 일을 적어보세요!">
             <button type="submit" class="button">작성하기</button>
         </form>
@@ -53,13 +53,24 @@
             console.log(ev.target.id)
             if (ev.target.tagName === 'SPAN') {
                 ev.target.parentElement.classList.toggle('checked');
+                const url = "/todo/"+ev.target.id;
+                $.ajax({
+                    type:'put',
+                    url:url,
+                    contentType:'application/json; charset=utf-8',
+                    data: JSON.stringify({completed : ev.target.parentElement.classList.contains('checked')}),
+                }).done(function() {
+                    console.log("update completed "+id+" done");
+                }).fail(function (error){
+                    alert(JSON.stringify(error));
+                });
                 console.log(ev.target.parentElement.classList.contains('checked'));
             }
         });
     });
     // Delete a list item when clicking on the "×" button
     function deleteElement(id) {
-        const url = "/todo/delete/"+id
+        const url = "/todo/"+id
         $.ajax({
             type:'delete',
             url:url,
@@ -76,19 +87,18 @@
         const contents = input.value;
         console.log(id)
         console.log(contents);
-        const url = "/todo/update/"+id;
+        const url = "/todo/"+id;
         $.ajax({
             type:'put',
             url:url,
             contentType:'application/json; charset=utf-8',
-            data: contents,
+            data: JSON.stringify({content : contents}),
         }).done(function() {
-            alert('할 일이 수정되었습니다.');
+            console.log("update contents "+id+" done");
             window.location.href = '/';
         }).fail(function (error){
             alert(JSON.stringify(error));
         });
-        //cancelEditing(this)
     }
     function startEditing(editButton) {
         // get the parent li element
